@@ -3,7 +3,17 @@ package Model;
 public class User
 {
 
-  private String title;
-  private
+  private int userID;
 
+
+  public User(int userID){
+
+    this.userID = userID;
+  }
+
+
+  public String toString(){
+
+    return "User: " + userID;
+  }
 }
