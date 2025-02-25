@@ -22,9 +22,4 @@ public class ReservedState implements VinylState
 
   }
 
-  @Override public void onRemove(Vinyl vinyl)
-  {
-
-  }
-
 }

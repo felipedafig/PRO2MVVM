@@ -12,6 +12,8 @@ public class Vinyl
   private Integer borrowedByID;
   private Integer reservedByID;
 
+  private boolean isReserved;
+
   private VinylState currentState;
   private boolean markedForRemoval;
 
@@ -26,6 +28,62 @@ public class Vinyl
 
     this.currentState = new AvailableState();
     this.markedForRemoval = false;
+    this.isReserved = false;
+  }
+
+  public void setArtistName(String artistName)
+  {
+    this.artistName = artistName;
+  }
+
+  public void setCurrentState(VinylState currentState)
+  {
+    this.currentState = currentState;
+  }
+
+  public void setReserved(boolean reserved)
+  {
+    isReserved = reserved;
+  }
+
+  public void setMarkedForRemoval(boolean markedForRemoval)
+  {
+    this.markedForRemoval = markedForRemoval;
+  }
+
+  public void setReleaseYear(int releaseYear)
+  {
+    this.releaseYear = releaseYear;
+  }
+
+  public void setTitle(String title)
+  {
+    this.title = title;
+  }
+
+  public VinylState getCurrentState()
+  {
+    return currentState;
+  }
+
+  public String getArtistName()
+  {
+    return artistName;
+  }
+
+  public boolean isMarkedForRemoval()
+  {
+    return markedForRemoval;
+  }
+
+  public int getReleaseYear()
+  {
+    return releaseYear;
+  }
+
+  public String getTitle()
+  {
+    return title;
   }
 
   public void setReservedByID(Integer reservedByID)
@@ -48,7 +106,13 @@ public class Vinyl
     return reservedByID;
   }
 
-  public
+  public boolean isReserved(){
+    return isReserved;
+  }
+
+  public void setIsReserved(boolean reserved){
+    this.isReserved = reserved;
+  }
 
   public void markForRemoval(){
 

@@ -23,11 +23,26 @@ public class Model implements PropertyChangeSubject
 
   public void addVinyl(Vinyl vinyl) {
     vinyls.add(vinyl);
+    support.firePropertyChange("Vinyls", null, vinyls);
+//    support.  isnt add a reservation or a borrow action because we gonna fire the change in stat
+
   }
 
   public List<Vinyl> getVinyls()
   {
     return vinyls;
+  }
+
+  public void removeVinyl(Vinyl vinyl){
+
+    if(vinyl.getBorrowedByID() == null && vinyl.getReservedByID() == null){
+
+      vinyls.remove(vinyl);
+      support.firePropertyChange("Vinyls", null, vinyls);
+    }
+    else{
+     vinyl.markForRemoval(); //If it is borrowed or reserved, it will be flagged to be deleted once it is available
+    }
   }
 
   @Override
