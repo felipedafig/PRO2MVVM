@@ -9,6 +9,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedMap;
 
 public class Model implements PropertyChangeSubject
 {
@@ -21,11 +22,11 @@ public class Model implements PropertyChangeSubject
     this.support = new PropertyChangeSupport(this);
   }
 
-  public void addVinyl(Vinyl vinyl) {
-    vinyls.add(vinyl);
-    support.firePropertyChange("Vinyls", null, vinyls);
-//    support.  isnt add a reservation or a borrow action because we gonna fire the change in stat
-
+  public void addVinyl(String title, String artistName, int releaseYear ) {
+    if(releaseYear<2025){
+      vinyls.add(new Vinyl(title, artistName, releaseYear));
+      support.firePropertyChange("VinylAdded", null, vinyls);} //support.  isnt add a reservation or a borrow action because we are going to fire the change in stat
+   else{System.out.println("Release date can not be in the future");}
   }
 
   public List<Vinyl> getVinyls()
