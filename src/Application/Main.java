@@ -28,8 +28,8 @@ public class Main extends Application {
     VinylListViewModel vinylListViewModel = new VinylListViewModel(model);
 
     // Load the VinylListView
-    FXMLLoader listViewLoader = new FXMLLoader(getClass().getResource("/path/to/VinylListView.fxml")); // Adjust the path to your FXML file
-    listViewLoader.setControllerFactory(controllerClass -> new VinylListView(vinylListViewModel, session)); // Pass the Session object
+    FXMLLoader listViewLoader = new FXMLLoader(getClass().getResource("/View/View.fxml"));
+    listViewLoader.setControllerFactory(controllerClass -> new VinylListView(vinylListViewModel, session));
     Scene listViewScene = new Scene(listViewLoader.load(), 800, 600);
 
     // Show the VinylListView
@@ -37,19 +37,18 @@ public class Main extends Application {
     primaryStage.setScene(listViewScene);
     primaryStage.show();
 
-    // Simulate multiple users (optional, for testing)
     simulateUsers(model);
   }
 
   private void showLoginWindow(Session session) throws IOException {
     Stage loginStage = new Stage();
-    FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/path/to/LoginView.fxml")); // Adjust the path to your FXML file
-    loginLoader.setControllerFactory(controllerClass -> new LoginView(session, loginStage)); // Pass the Session object
+    FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/View/LoginView.fxml"));
+    loginLoader.setControllerFactory(controllerClass -> new LoginView(session, loginStage));
     Scene loginScene = new Scene(loginLoader.load(), 300, 200);
 
     loginStage.setTitle("Login");
     loginStage.setScene(loginScene);
-    loginStage.showAndWait(); // Wait for the login window to close
+    loginStage.showAndWait();
   }
 
   private void simulateUsers(Model model) {
@@ -67,10 +66,10 @@ public class Main extends Application {
     // Simulate user actions (borrow, return, reserve)
     try {
       while (true) {
-        // Randomly select a vinyl to act on
+        // Randomly select a vinyl
         Vinyl vinyl = model.getVinyls().get((int) (Math.random() * model.getVinyls().size()));
 
-        // Randomly choose an action
+        // Random action
         int action = (int) (Math.random() * 3);
         switch (action) {
           case 0:
@@ -84,7 +83,6 @@ public class Main extends Application {
             break;
         }
 
-        // Sleep for a random time (1-3 seconds)
         Thread.sleep((long) (Math.random() * 2000 + 1000));
       }
     } catch (InterruptedException e) {

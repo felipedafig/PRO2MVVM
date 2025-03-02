@@ -2,12 +2,14 @@ package View;
 
 import Shared.Session;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class LoginView {
 
   @FXML private TextField userIdField;
+  @FXML private Button loginButton;
 
   private Session session;
   private Stage stage;
@@ -19,10 +21,9 @@ public class LoginView {
 
   @FXML
   public void onLoginButtonPressed() {
-    String userId = userIdField.getText(); // Get the user ID from the text field
-    session.setUserId(userId); // Store the user ID in the Session object
+    String userId = userIdField.getText();
+    session.setUserId(userId); // Stores the user ID in the Session object
 
-    // Close the login window
     stage.close();
   }
 }

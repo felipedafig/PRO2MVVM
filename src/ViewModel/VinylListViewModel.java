@@ -16,7 +16,7 @@ public class VinylListViewModel {
     this.model = model;
     this.vinyls = FXCollections.observableArrayList();
     refresh(); // Load initial data from the Model
-    model.addPropertyChangeListener("VinylUpdated", this::update); // Listen for updates
+    model.addPropertyChangeListener("VinylAdded", this::update); // Listen for updates
   }
 
   private void update(PropertyChangeEvent propertyChangeEvent) {
@@ -71,8 +71,8 @@ public class VinylListViewModel {
     }
   }
 
-  public void addNewVinyl() {
-    model.addVinyl("New Vinyl", "New Artist", 2023); // Add a new vinyl with default values
-  }
+//  public void addNewVinyl() {
+//    model.addVinyl("New Vinyl", "New Artist", 2023); // Add a new vinyl with default values
+//  }
 
 }

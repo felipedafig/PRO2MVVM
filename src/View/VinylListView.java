@@ -15,6 +15,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import Model.Model;
+
 
 public class VinylListView {
 
@@ -32,28 +34,27 @@ public class VinylListView {
   @FXML private Button unMarkForRemovalButton;
   @FXML private Button addItemsButton;
 
-  @FXML private ListView<Vinyl> vinylListView;
+//  @FXML private ListView<Vinyl> vinylListView;
 
   private VinylListViewModel vinylListViewModel;
   private AddVinylViewModel addVinylViewModel;
-  private Session session; // Add the Session object
+  private Session session;
 
   public VinylListView(VinylListViewModel vinylListViewModel, Session session) {
     this.vinylListViewModel = vinylListViewModel;
-    this.session = session; // Initialize the Session object
+    this.session = session;
   }
 
   @FXML
   public void initialize() {
     // Bind the ListView to the ViewModel's data
-    vinylListView.setItems(vinylListViewModel.getVinyls());
+    vinylTableView.setItems(vinylListViewModel.getVinyls());
 
-    // Configure TableView columns
     titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
     artistNameColumn.setCellValueFactory(new PropertyValueFactory<>("artistName"));
     releaseYearColumn.setCellValueFactory(new PropertyValueFactory<>("releaseYear"));
 
-    // Configure the state column dynamically
+    // Custom state column
     stateColumn.setCellValueFactory(cellData -> {
       Vinyl vinyl = cellData.getValue();
       String state;
@@ -67,45 +68,44 @@ public class VinylListView {
       return new SimpleStringProperty(state);
     });
 
-    // Bind button disable properties
-    borrowButton.disableProperty().bind(vinylListView.getSelectionModel().selectedItemProperty().isNull());
-    returnButton.disableProperty().bind(vinylListView.getSelectionModel().selectedItemProperty().isNull());
-    reserveButton.disableProperty().bind(vinylListView.getSelectionModel().selectedItemProperty().isNull());
-    cancelReservationButton.disableProperty().bind(vinylListView.getSelectionModel().selectedItemProperty().isNull());
-    markForRemovalButton.disableProperty().bind(vinylListView.getSelectionModel().selectedItemProperty().isNull());
-    unMarkForRemovalButton.disableProperty().bind(vinylListView.getSelectionModel().selectedItemProperty().isNull());
+    borrowButton.disableProperty().bind(vinylTableView.getSelectionModel().selectedItemProperty().isNull());
+    returnButton.disableProperty().bind(vinylTableView.getSelectionModel().selectedItemProperty().isNull());
+    reserveButton.disableProperty().bind(vinylTableView.getSelectionModel().selectedItemProperty().isNull());
+    cancelReservationButton.disableProperty().bind(vinylTableView.getSelectionModel().selectedItemProperty().isNull());
+    markForRemovalButton.disableProperty().bind(vinylTableView.getSelectionModel().selectedItemProperty().isNull());
+    unMarkForRemovalButton.disableProperty().bind(vinylTableView.getSelectionModel().selectedItemProperty().isNull());
   }
 
   @FXML
   private void onBorrowButtonPressed() {
-    Vinyl selectedVinyl = vinylListView.getSelectionModel().getSelectedItem();
+    Vinyl selectedVinyl = vinylTableView.getSelectionModel().getSelectedItem();
     if (selectedVinyl != null) {
-      String userId = session.getUserId(); // Get the user ID from the Session
-      vinylListViewModel.borrowVinyl(selectedVinyl, Integer.parseInt(userId)); // Pass the user ID to the ViewModel
+      String userId = session.getUserId(); //userID from shared Session
+      vinylListViewModel.borrowVinyl(selectedVinyl, Integer.parseInt(userId));
     }
   }
 
   @FXML
   private void onReturnButtonPressed() {
-    Vinyl selectedVinyl = vinylListView.getSelectionModel().getSelectedItem();
+    Vinyl selectedVinyl = vinylTableView.getSelectionModel().getSelectedItem();
     if (selectedVinyl != null) {
-      String userId = session.getUserId(); // Get the user ID from the Session
-      vinylListViewModel.returnVinyl(selectedVinyl, Integer.parseInt(userId)); // Pass the user ID to the ViewModel
+      String userId = session.getUserId();
+      vinylListViewModel.returnVinyl(selectedVinyl, Integer.parseInt(userId));
     }
   }
 
   @FXML
   private void onReserveButtonPressed() {
-    Vinyl selectedVinyl = vinylListView.getSelectionModel().getSelectedItem();
+    Vinyl selectedVinyl = vinylTableView.getSelectionModel().getSelectedItem();
     if (selectedVinyl != null) {
-      String userId = session.getUserId(); // Get the user ID from the Session
-      vinylListViewModel.reserveVinyl(selectedVinyl, Integer.parseInt(userId)); // Pass the user ID to the ViewModel
+      String userId = session.getUserId();
+      vinylListViewModel.reserveVinyl(selectedVinyl, Integer.parseInt(userId));
     }
   }
 
   @FXML
   private void onCancelReservationButtonPressed() {
-    Vinyl selectedVinyl = vinylListView.getSelectionModel().getSelectedItem();
+    Vinyl selectedVinyl = vinylTableView.getSelectionModel().getSelectedItem();
     if (selectedVinyl != null) {
       vinylListViewModel.cancelReservation(selectedVinyl);
     }
@@ -113,7 +113,7 @@ public class VinylListView {
 
   @FXML
   private void onMarkForRemovalButtonPressed() {
-    Vinyl selectedVinyl = vinylListView.getSelectionModel().getSelectedItem();
+    Vinyl selectedVinyl = vinylTableView.getSelectionModel().getSelectedItem();
     if (selectedVinyl != null) {
       vinylListViewModel.markForRemoval(selectedVinyl);
     }
@@ -121,7 +121,7 @@ public class VinylListView {
 
   @FXML
   private void onUnMarkForRemovalButtonPressed() {
-    Vinyl selectedVinyl = vinylListView.getSelectionModel().getSelectedItem();
+    Vinyl selectedVinyl = vinylTableView.getSelectionModel().getSelectedItem();
     if (selectedVinyl != null) {
       vinylListViewModel.unMarkForRemoval(selectedVinyl);
     }
@@ -132,25 +132,29 @@ public class VinylListView {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("AddView.fxml"));
 
-      // Set controller
-      AddVinylView controller = new AddVinylView(addVinylViewModel);
-      loader.setController(controller);
+      // Create the controller and pass the ViewModel and Session
+      AddVinylView controller = new AddVinylView(addVinylViewModel, session);
+      loader.setController(controller); // Set the controller explicitly
 
       Parent root = loader.load();
 
-      Stage stage = new Stage();
-      stage.setTitle("Add New Vinyl");
-      stage.setScene(new Scene(root));
+      Model vinylModel = new Model();
+      AddVinylViewModel addVinylViewModel = new AddVinylViewModel(vinylModel);
+      AddVinylView addVinylView = loader.getController();
+      loader.setController(addVinylView);
 
+      Stage stage = (Stage) vinylTableView.getScene().getWindow();
+      stage.setScene(new Scene(root));
       stage.show();
+
     } catch (Exception e) {
       e.printStackTrace();
       System.out.println("Failed to load the Add Vinyl form.");
     }
   }
 
-  @FXML
-  private void onRefreshButtonPressed() {
-    vinylListViewModel.refresh();
-  }
+//  @FXML
+//  private void onRefreshButtonPressed() {
+//    vinylListViewModel.refresh();
+//  }
 }

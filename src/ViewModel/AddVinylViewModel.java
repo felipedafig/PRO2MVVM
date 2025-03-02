@@ -1,77 +1,54 @@
 package ViewModel;
 
+import Shared.Session;
 import javafx.beans.property.*;
 import Model.Model;
 
-public class AddVinylViewModel // Handles the creation of new users, uses model add method
-{
+public class AddVinylViewModel {
 
-  private Model model;
-  private StringProperty title, artistName;
-  private IntegerProperty releaseYear;
-  private BooleanProperty shouldSubmitBeDisabled = new SimpleBooleanProperty(true);
+  private final Model model;
+  private final StringProperty title;
+  private final StringProperty artistName;
+  private final IntegerProperty releaseYear;
+  private final BooleanProperty shouldSubmitBeDisabled;
 
-  public AddVinylViewModel(Model model){
-
+  public AddVinylViewModel(Model model) {
     this.model = model;
-    title = new SimpleStringProperty();
-    artistName = new SimpleStringProperty();
-    releaseYear = new SimpleIntegerProperty();
-    shouldSubmitBeDisabled = new SimpleBooleanProperty();
-
+    this.title = new SimpleStringProperty();
+    this.artistName = new SimpleStringProperty();
+    this.releaseYear = new SimpleIntegerProperty();
+    this.shouldSubmitBeDisabled = new SimpleBooleanProperty(true);
   }
 
-  public void addVinyl(){
-
-    model.addVinyl(title.get(), artistName.get(), releaseYear.get());
+  // Receives values from the view instead of using properties
+  public void addVinyl(String title, String artistName, int releaseYear) {
+    model.addVinyl(title, artistName, releaseYear);
   }
 
-  public String getTitle()
-  {
-    return title.get();
-  }
-
-  public StringProperty titleProperty()
-  {
+  public StringProperty titleProperty() {
     return title;
   }
 
-  public String getArtistName()
-  {
-    return artistName.get();
-  }
-
-  public StringProperty artistNameProperty()
-  {
+  public StringProperty artistNameProperty() {
     return artistName;
   }
 
-  public int getReleaseYear()
-  {
-    return releaseYear.get();
-  }
-
-  public IntegerProperty releaseYearProperty()
-  {
+  public IntegerProperty releaseYearProperty() {
     return releaseYear;
   }
 
-  public boolean isShouldSubmitBeDisabled()
-  {
-    return shouldSubmitBeDisabled.get();
-  }
-
-  public BooleanProperty shouldSubmitBeDisabledProperty()
-  {
+  public BooleanProperty shouldSubmitBeDisabledProperty() {
     return shouldSubmitBeDisabled;
   }
 
   public void validateForm(boolean isReleaseYearValid) {
-    boolean isTitleFilled = !titleProperty().get().trim().isEmpty();
-    boolean isArtistFilled = !artistNameProperty().get().trim().isEmpty();
+    boolean isTitleFilled = title.get() != null && !title.get().trim().isEmpty();
+    boolean isArtistFilled = artistName.get() != null && !artistName.get().trim().isEmpty();
 
-    // The button should be disabled if any field is invalid
-    shouldSubmitBeDisabledProperty().set(!(isTitleFilled && isArtistFilled && isReleaseYearValid));
+    // Disable the submit button if any field is invalid
+    shouldSubmitBeDisabled.set(!(isTitleFilled && isArtistFilled && isReleaseYearValid));
   }
+
+
 
 }

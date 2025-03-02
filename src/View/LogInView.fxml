@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="107.0" prefWidth="271.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="107.0" prefWidth="271.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.LoginView">
    <children>
       <VBox layoutX="33.0" prefHeight="107.0" prefWidth="205.0">
          <children>
@@ -20,7 +19,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="39.0" prefWidth="600.0">
                <children>
-                  <Button fx:id="loginButton" mnemonicParsing="false" text="Login" />
+                  <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onLoginButtonPressed" text="Login" />
                </children>
             </HBox>
          </children>
