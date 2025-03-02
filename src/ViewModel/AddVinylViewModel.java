@@ -65,4 +65,13 @@ public class AddVinylViewModel // Handles the creation of new users, uses model 
   {
     return shouldSubmitBeDisabled;
   }
+
+  public void validateForm(boolean isReleaseYearValid) {
+    boolean isTitleFilled = !titleProperty().get().trim().isEmpty();
+    boolean isArtistFilled = !artistNameProperty().get().trim().isEmpty();
+
+    // The button should be disabled if any field is invalid
+    shouldSubmitBeDisabledProperty().set(!(isTitleFilled && isArtistFilled && isReleaseYearValid));
+  }
+
 }

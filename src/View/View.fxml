@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.VinylListView">
+   <children>
+      <VBox layoutX="3.0" layoutY="1.0" prefHeight="393.0" prefWidth="600.0">
+         <children>
+            <TableView fx:id="vinylTableView" prefHeight="200.0" prefWidth="213.0">
+              <columns>
+                <TableColumn fx:id="titleColumn" prefWidth="109.0" text="Title" />
+                <TableColumn fx:id="artistNameColumn" prefWidth="185.0" text="Artist" />
+                  <TableColumn fx:id="releaseYearColumn" prefWidth="89.0" text="Release Year" />
+                  <TableColumn fx:id="stateColumn" prefWidth="216.0" text="State" />
+              </columns>
+            </TableView>
+            <Button fx:id="borrowButton" mnemonicParsing="false" onAction="#onBorrowButtonPressed" text="Borrow" />
+            <Button fx:id="returnButton" mnemonicParsing="false" onAction="#onReturnButtonPressed" text="Return" />
+            <Button fx:id="reserveButton" mnemonicParsing="false" onAction="#onReserveButtonPressed" text="Reserve" />
+            <Button fx:id="cancelReservationButton" mnemonicParsing="false" onAction="#onCancelReservationButtonPressed" text="Cancel Reservation" />
+            <Button fx:id="markForRemovalButton" mnemonicParsing="false" onAction="#onMarkForRemovalButtonPressed" text="Mark For Removal" />
+            <Button fx:id="unMarkForRemovalButton" mnemonicParsing="false" onAction="#onUnMarkForRemovalButtonPressed" text="Unmark For Removal" />
+            <Button fx:id="addItemsButton" mnemonicParsing="false" onAction="#onAddItemsButtonPressed" text="Add Items" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

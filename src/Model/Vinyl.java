@@ -9,8 +9,9 @@ public class Vinyl
   private String artistName;
   private int releaseYear;
 
-  private Integer borrowedByID;
+  private Integer borrowedByID; // Integer instead of int because int is primitive and cant be null
   private Integer reservedByID;
+
 
   private boolean isReserved;
 
@@ -131,11 +132,6 @@ public class Vinyl
   public void changeToBorrowedState(){
 
     currentState = new BorrowedState();
-  }
-
-  public void changeToReservedState(){
-
-    currentState = new ReservedState();
   }
 
   public void changeToAvailableState(){

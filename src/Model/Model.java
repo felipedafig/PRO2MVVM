@@ -20,6 +20,55 @@ public class Model implements PropertyChangeSubject
 
     this.vinyls = FXCollections.observableArrayList();
     this.support = new PropertyChangeSupport(this);
+
+    //initial vinyls
+    vinyls.add(new Vinyl("Title 1", "Artist 1", 2020));
+    vinyls.add(new Vinyl("Title 2", "Artist 2", 2021));
+    vinyls.add(new Vinyl("Title 3", "Artist 3", 2022));
+  }
+
+  public void borrowVinyl(Vinyl vinyl, int userId) {
+    if (vinyl.getBorrowedByID() == null && vinyl.getReservedByID() == null) {
+      vinyl.setBorrowedByID(userId);
+      support.firePropertyChange("VinylUpdated", null, vinyl);
+    }
+  }
+
+  public void returnVinyl(Vinyl vinyl, int userId) {
+    if (vinyl.getBorrowedByID() != null && vinyl.getBorrowedByID() == userId) {
+      vinyl.setBorrowedByID(null);
+      support.firePropertyChange("VinylUpdated", null, vinyl);
+    }
+  }
+
+  public void reserveVinyl(Vinyl vinyl, int userId) {
+    if (vinyl.getBorrowedByID() == null && vinyl.getReservedByID() == null) {
+      vinyl.setReservedByID(userId);
+      support.firePropertyChange("VinylUpdated", null, vinyl);
+    }
+  }
+
+  public void cancelReservationVinyl(Vinyl vinyl) {
+    if (vinyl.getReservedByID() != null) {
+      vinyl.setReservedByID(null); // Cancel the reservation
+      support.firePropertyChange("VinylUpdated", null, vinyl); // Notify listeners
+    }
+  }
+
+  public void removeVinyl(Vinyl vinyl){ //same as mark for removal
+
+    if(vinyl.getBorrowedByID() == null && vinyl.getReservedByID() == null){
+
+      vinyls.remove(vinyl);
+      support.firePropertyChange("Vinyls", null, vinyls);
+    }
+    else{
+      vinyl.markForRemoval(); //If it is borrowed or reserved, it will be flagged to be deleted once it is available
+    }
+  }
+
+  public void unMarkForRemovalVinyl(Vinyl vinyl){
+    vinyl.unmarkForRemoval();
   }
 
   public void addVinyl(String title, String artistName, int releaseYear ) {
@@ -32,18 +81,6 @@ public class Model implements PropertyChangeSubject
   public List<Vinyl> getVinyls()
   {
     return vinyls;
-  }
-
-  public void removeVinyl(Vinyl vinyl){
-
-    if(vinyl.getBorrowedByID() == null && vinyl.getReservedByID() == null){
-
-      vinyls.remove(vinyl);
-      support.firePropertyChange("Vinyls", null, vinyls);
-    }
-    else{
-     vinyl.markForRemoval(); //If it is borrowed or reserved, it will be flagged to be deleted once it is available
-    }
   }
 
   @Override
