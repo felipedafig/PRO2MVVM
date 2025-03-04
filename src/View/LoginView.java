@@ -22,7 +22,7 @@ public class LoginView {
   @FXML
   public void onLoginButtonPressed() {
     String userId = userIdField.getText();
-    session.setUserId(userId); // Stores the user ID in the Session object
+    session.setUserId(userId); //storess user ID in session object
 
     stage.close();
   }

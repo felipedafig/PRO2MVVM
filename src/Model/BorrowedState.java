@@ -2,7 +2,7 @@ package Model;
 
 public class BorrowedState implements VinylState
 {
-  @Override public void onBorrow(Vinyl vinyl, int userID)
+  @Override public void onBorrow(Vinyl vinyl, Integer userID)
   {
     // Log the error
     System.out.println(
@@ -15,13 +15,13 @@ public class BorrowedState implements VinylState
 
   @Override public void onReturn(Vinyl vinyl)
   {
-    // Log the action
+    // Log action
     System.out.println("Returning Vinyl '" + vinyl.getTitle() + "'.");
 
     vinyl.setBorrowedByID(null); // sets borrowedByID to null to deem it unborrowed/returned
 
     if (!vinyl.isReserved()) {
-      // Log the transition to AvailableState
+      // Log transition to AvailableState
       System.out.println(
           "Vinyl '" + vinyl.getTitle() + "' is not reserved. Transitioning to AvailableState."
       );
@@ -40,21 +40,21 @@ public class BorrowedState implements VinylState
     }
   }
 
-  @Override public void onReserve(Vinyl vinyl, int userID)
+  @Override public void onReserve(Vinyl vinyl, Integer userID)
   {
-    // Log the action
+    // Log action
     System.out.println("User " + userID + " is attempting to reserve Vinyl '" + vinyl.getTitle() + "'.");
 
     if (!vinyl.isReserved()) {
       vinyl.setReservedByID(userID);
       vinyl.setIsReserved(true);
 
-      // Log the result
+      // Log result
       System.out.println(
           "Vinyl '" + vinyl.getTitle() + "' is now reserved by User " + userID + "."
       );
     } else {
-      // Log the error
+      // Log error
       System.out.println(
           "Error: User " + userID + " attempted to reserve Vinyl '" + vinyl.getTitle() +
               "', but it is already reserved by User " + vinyl.getReservedByID() + "."
@@ -66,13 +66,13 @@ public class BorrowedState implements VinylState
 
   @Override public void onCancelReservation(Vinyl vinyl)
   {
-    // Log the action
+    // Logaction
     System.out.println("Canceling reservation for Vinyl '" + vinyl.getTitle() + "'.");
 
     vinyl.setReservedByID(null); // sets reservedByID null to unreserve, so other users can reserve
     vinyl.setIsReserved(false);
 
-    // Log the result
+    // Log result
     System.out.println("Reservation for Vinyl '" + vinyl.getTitle() + "' has been canceled.");
   }
 }

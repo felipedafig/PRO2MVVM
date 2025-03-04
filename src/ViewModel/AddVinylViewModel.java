@@ -20,7 +20,6 @@ public class AddVinylViewModel {
     this.shouldSubmitBeDisabled = new SimpleBooleanProperty(true);
   }
 
-  // Receives values from the view instead of using properties
   public void addVinyl(String title, String artistName, int releaseYear) {
     model.addVinyl(title, artistName, releaseYear);
   }
@@ -45,7 +44,7 @@ public class AddVinylViewModel {
     boolean isTitleFilled = title.get() != null && !title.get().trim().isEmpty();
     boolean isArtistFilled = artistName.get() != null && !artistName.get().trim().isEmpty();
 
-    // Disable the submit button if any field is invalid
+    //disable add button if any field is invalid
     shouldSubmitBeDisabled.set(!(isTitleFilled && isArtistFilled && isReleaseYearValid));
   }
 

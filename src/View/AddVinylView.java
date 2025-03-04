@@ -40,7 +40,7 @@ public class AddVinylView
 
     addButton.disableProperty().bind(addVinylViewModel.shouldSubmitBeDisabledProperty());
 
-    //text formatters forvalidation
+    //text formatters for  validation
     titleField.setTextFormatter(new TextFormatter<>(change -> {
       String newText = change.getControlNewText();
       return newText.length() <= 20 ? change : null;
@@ -53,7 +53,7 @@ public class AddVinylView
 
     releaseYearField.setTextFormatter(new TextFormatter<>(change -> {
       String newText = change.getControlNewText();
-      return newText.matches("\\d*") ? change : null; // Only numbers
+      return newText.matches("\\d*") ? change : null; //only numbers
     }));
 
     // Validate release year and update ViewModel state
@@ -67,7 +67,7 @@ public class AddVinylView
 
   @FXML
   public void onAddButtonPressed() {
-    // Read values from the text fields
+    //readfrom text fields
     String title = titleField.getText();
     String artistName = artistNameField.getText();
     int releaseYear = Integer.parseInt(releaseYearField.getText());
@@ -78,7 +78,6 @@ public class AddVinylView
     artistNameField.clear();
     releaseYearField.clear();
 
-    // Navigate to the VinylListView
     navigateToVinylListView();
   }
 

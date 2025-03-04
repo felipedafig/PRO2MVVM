@@ -27,30 +27,33 @@ public class Model implements PropertyChangeSubject
     vinyls.add(new Vinyl("Title 3", "Artist 3", 2022));
   }
 
-  public void borrowVinyl(Vinyl vinyl, int userId) {
+  public void borrowVinyl(Vinyl vinyl, Integer userId) {
     if (vinyl.getBorrowedByID() == null && vinyl.getReservedByID() == null) {
       vinyl.setBorrowedByID(userId);
       support.firePropertyChange("VinylUpdated", null, vinyl);
     }
   }
 
-  public void returnVinyl(Vinyl vinyl, int userId) {
+  public void returnVinyl(Vinyl vinyl, Integer userId) {
     if (vinyl.getBorrowedByID() != null && vinyl.getBorrowedByID() == userId) {
       vinyl.setBorrowedByID(null);
+      vinyl.returnVinyl(userId); //check the logic
       support.firePropertyChange("VinylUpdated", null, vinyl);
     }
   }
 
-  public void reserveVinyl(Vinyl vinyl, int userId) {
+  public void reserveVinyl(Vinyl vinyl, Integer userId) {
     if (vinyl.getBorrowedByID() == null && vinyl.getReservedByID() == null) {
       vinyl.setReservedByID(userId);
       support.firePropertyChange("VinylUpdated", null, vinyl);
     }
   }
 
-  public void cancelReservationVinyl(Vinyl vinyl) {
+  public void cancelReservationVinyl(Vinyl vinyl, Integer userId) {
     if (vinyl.getReservedByID() != null) {
       vinyl.setReservedByID(null); // Cancel the reservation
+      vinyl.cancelReservation(userId);
+
       support.firePropertyChange("VinylUpdated", null, vinyl); // Notify listeners
     }
   }
@@ -71,7 +74,7 @@ public class Model implements PropertyChangeSubject
     vinyl.unmarkForRemoval();
   }
 
-  public void addVinyl(String title, String artistName, int releaseYear ) {
+  public void addVinyl(String title, String artistName, Integer releaseYear ) {
     if(releaseYear<2025){
       vinyls.add(new Vinyl(title, artistName, releaseYear));
       support.firePropertyChange("VinylAdded", null, vinyls);} //support.  isnt add a reservation or a borrow action because we are going to fire the change in stat

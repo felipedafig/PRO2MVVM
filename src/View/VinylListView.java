@@ -107,7 +107,9 @@ public class VinylListView {
   private void onCancelReservationButtonPressed() {
     Vinyl selectedVinyl = vinylTableView.getSelectionModel().getSelectedItem();
     if (selectedVinyl != null) {
-      vinylListViewModel.cancelReservation(selectedVinyl);
+      String userId = session.getUserId();
+      vinylListViewModel.cancelReservation(selectedVinyl,
+          Integer.valueOf(userId));
     }
   }
 

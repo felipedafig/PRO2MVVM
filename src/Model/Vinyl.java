@@ -9,13 +9,13 @@ public class Vinyl
   private String artistName;
   private int releaseYear;
 
-  private Integer borrowedByID; // Integer instead of int because int is primitive and cant be null
+  private Integer borrowedByID; // Integer because int is primitive and cant be null
   private Integer reservedByID;
-
 
   private boolean isReserved;
 
   private VinylState currentState;
+  private VinylState availableState, borrowedState;
   private boolean markedForRemoval;
 
   public Vinyl(String title, String artistName, int releaseYear)
@@ -27,7 +27,10 @@ public class Vinyl
     borrowedByID = null;
     reservedByID = null;
 
-    this.currentState = new AvailableState();
+    availableState = new AvailableState();
+    borrowedState = new BorrowedState();
+
+    this.currentState = availableState;
     this.markedForRemoval = false;
     this.isReserved = false;
   }
@@ -90,11 +93,24 @@ public class Vinyl
   public void setReservedByID(Integer reservedByID)
   {
     this.reservedByID = reservedByID;
+    currentState.onReserve(this, reservedByID);
   }
+
+  public void returnVinyl(Integer borrowedByID){
+    
+    currentState.onReserve(this, borrowedByID);
+}
 
   public void setBorrowedByID(Integer borrowedByID)
   {
     this.borrowedByID = borrowedByID;
+    currentState.onBorrow(this, borrowedByID);
+  }
+
+  public void cancelReservation(Integer reservedByID){
+
+    this.reservedByID = reservedByID;
+    currentState.onCancelReservation(this);
   }
 
   public Integer getBorrowedByID()
@@ -128,16 +144,19 @@ public class Vinyl
   public boolean isItMarkedForRemoval(){return markedForRemoval;}
 
 
-  //Change btwn states:
   public void changeToBorrowedState(){
 
-    currentState = new BorrowedState();
+    currentState = borrowedState;
   }
 
   public void changeToAvailableState(){
 
-    currentState = new AvailableState();
+    currentState = availableState;
   }
+
+  public String toString(){
+    return ""; //... prob gonna use in state collumn...String Builder
+  };
 
 
 

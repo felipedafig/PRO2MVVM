@@ -3,14 +3,12 @@ package Model;
 public class User
 {
 
-  private int userID;
+  private Integer userID;
 
-
-  public User(int userID){
+  public User(Integer userID){
 
     this.userID = userID;
   }
-
 
   public String toString(){
 

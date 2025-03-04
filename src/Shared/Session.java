@@ -1,7 +1,7 @@
 package Shared;
 
 public class Session {
-  private String userId; // Store the user ID
+  private String userId; //Stores user ID
 
   public String getUserId() {
     return userId;

@@ -15,8 +15,8 @@ public class VinylListViewModel {
   public VinylListViewModel(Model model) {
     this.model = model;
     this.vinyls = FXCollections.observableArrayList();
-    refresh(); // Load initial data from the Model
-    model.addPropertyChangeListener("VinylAdded", this::update); // Listen for updates
+    refresh();
+    model.addPropertyChangeListener("VinylAdded", this::update);
   }
 
   private void update(PropertyChangeEvent propertyChangeEvent) {
@@ -35,27 +35,27 @@ public class VinylListViewModel {
   }
 
   // Delegate button actions to the Model
-  public void borrowVinyl(Vinyl vinyl, int userId) {
+  public void borrowVinyl(Vinyl vinyl, Integer userId) {
     if (vinyl != null) {
       model.borrowVinyl(vinyl, userId);
     }
   }
 
-  public void returnVinyl(Vinyl vinyl, int userId) {
+  public void returnVinyl(Vinyl vinyl, Integer userId) {
     if (vinyl != null) {
       model.returnVinyl(vinyl, userId);
     }
   }
 
-  public void reserveVinyl(Vinyl vinyl, int userId) {
+  public void reserveVinyl(Vinyl vinyl, Integer userId) {
     if (vinyl != null) {
       model.reserveVinyl(vinyl, userId);
     }
   }
 
-  public void cancelReservation(Vinyl vinyl) {
+  public void cancelReservation(Vinyl vinyl, Integer userId) {
     if (vinyl != null) {
-      model.cancelReservationVinyl(vinyl);
+      model.cancelReservationVinyl(vinyl, userId);
     }
   }
 
